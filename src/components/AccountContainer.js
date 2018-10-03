@@ -5,25 +5,23 @@ import {transactions} from '../transactionsData'
 
 class AccountContainer extends Component {
 
-  constructor() {
-    super()
-
-    // get a default state working with the data imported from TransactionsData
-    // use this to get the functionality working
-    // then replace the default transactions with a call to the API
-
+  state = {
+    transactions: transactions,
+    searchText: ""
   }
 
-  handleChange(event) {
-    // your code here
+  handleChange=(searchText)=>{
+    console.log(`handleChange`, searchText)
+    this.setState({searchText: searchText})
   }
+
 
   render() {
-
+    console.log(this.state.transactions)
     return (
       <div>
-        <Search />
-        <TransactionsList />
+        <Search handleChange={this.handleChange} searchText={this.state.searchText}/>
+        <TransactionsList transactions = {this.state.transactions} searchText={this.state.searchText}/>
       </div>
     )
   }

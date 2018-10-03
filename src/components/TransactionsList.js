@@ -1,6 +1,36 @@
 import React from 'react'
+import Transaction from "./Transaction"
 
-const TransactionsList = () => {
+const TransactionsList = (props) => {
+
+  const displayPostedAt = () => {
+    return props.transactions.map(transaction => {
+      return transaction.posted_at
+    })
+  }
+
+  const displayDescription = () => {
+    return props.transactions.map(transaction => {
+      return transaction.description
+    })
+  }
+
+  const displayAmount = () => {
+    return props.transactions.map(transaction => {
+      return transaction.amount
+    })
+  }
+  const displayCategory = () => {
+    return props.transactions.map(transaction => {
+      return transaction.category
+    })
+  }
+
+  const filteredTransaction = () => {
+    return props.transactions.filter(transaction => {
+      return transaction.description.includes(props.searchTerm) || transaction.category.includes(props.searchTerm)
+    })
+  }
 
   return (
     <table className="ui celled striped padded table">
@@ -8,29 +38,29 @@ const TransactionsList = () => {
         <tr>
           <th>
             <h3 className="ui center aligned header">
-              Posted At
+              Posted At {displayPostedAt()}
             </h3>
           </th>
           <th>
             <h3 className="ui center aligned header">
-              Description
+              Description {displayDescription()}
             </h3>
           </th>
           <th>
             <h3 className="ui center aligned header">
-              Category
+              Category {displayCategory()}
             </h3>
           </th>
           <th>
             <h3 className="ui center aligned header">
-              Amount
+              Amount {displayAmount()}
             </h3>
           </th>
         </tr>
-
-        {"... your code here..."}
-
       </tbody>
+      <Transaction
+        searchTerm={props.searchTerm}
+        transaction={filteredTransaction()} />
     </table>
   )
 }

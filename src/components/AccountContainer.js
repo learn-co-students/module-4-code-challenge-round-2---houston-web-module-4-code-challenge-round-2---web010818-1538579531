@@ -14,14 +14,16 @@ class AccountContainer extends Component {
     // console.log(event.target.value);
     let word = event.target.value;
     this.setState({ searchTerm: word });
-    console.log(this.state.transactions.transactions[0].description);
+    // console.log(this.state.transactions.transactions[0].description);
     this.findTransactions();
   };
 
   findTransactions = () => {
     console.log('finding transactions');
     let newTransactions = this.state.transactions.transactions.filter(
-      (transaction) => transaction.description.includes(this.state.searchTerm)
+      (transaction) =>
+        transaction.description.includes(this.state.searchTerm) ||
+        transaction.category.includes(this.state.searchTerm)
     );
     this.setState({ foundTransactions: newTransactions });
     console.log(this.state.foundTransactions);

@@ -6,7 +6,11 @@ import {transactions} from '../transactionsData'
 class AccountContainer extends Component {
 
   constructor() {
-    super()
+    super();
+    this.state = {
+      transactions: [...transactions],
+      search: ''
+    }
 
     // get a default state working with the data imported from TransactionsData
     // use this to get the functionality working
@@ -14,16 +18,37 @@ class AccountContainer extends Component {
 
   }
 
-  handleChange(event) {
-    // your code here
+  displayAllTransactions = (transactions) => {
+    this.setState({
+      transactions: transactions
+    })
+  }
+
+  handleChange = (searchTerm) => {
+    this.setState({
+      search: searchTerm
+    })
+  }
+
+
+  filterTransactions = () => {
+    let newTransactions = this.state.transactions.filter((transaction) => {
+      return transaction.description.toLowerCase() === this.state.search.toLowerCase()
+    })
+    //debugger
+    //filterTransaction will return an array
+    this.setState({
+      transactions: newTransactions
+    })
   }
 
   render() {
 
     return (
       <div>
-        <Search />
-        <TransactionsList />
+        <Search search={this.handleChange}/>
+        <TransactionsList transactions={this.state.transactions}/>
+        {this.state.search != '' ? this.filterTransactions() : null}
       </div>
     )
   }

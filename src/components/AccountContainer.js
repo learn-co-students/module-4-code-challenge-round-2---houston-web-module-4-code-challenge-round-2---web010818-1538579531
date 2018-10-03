@@ -1,32 +1,50 @@
-import React, { Component } from 'react'
-import TransactionsList from './TransactionsList'
-import Search from './Search'
-import {transactions} from '../transactionsData'
+import React, { Component } from 'react';
+import TransactionsList from './TransactionsList';
+import Search from './Search';
+import { transactions } from '../transactionsData';
 
 class AccountContainer extends Component {
+  state = {
+    transactions: { transactions },
+    searchTerm: '',
+    foundTransactions: []
+  };
 
-  constructor() {
-    super()
+  handleChange = (event) => {
+    // console.log(event.target.value);
+    let word = event.target.value;
+    this.setState({ searchTerm: word });
+    // console.log(this.state.transactions.transactions[0].description);
+    this.findTransactions();
+  };
 
-    // get a default state working with the data imported from TransactionsData
-    // use this to get the functionality working
-    // then replace the default transactions with a call to the API
-
-  }
-
-  handleChange(event) {
-    // your code here
-  }
+  findTransactions = () => {
+    console.log('finding transactions');
+    let newTransactions = this.state.transactions.transactions.filter(
+      (transaction) =>
+        transaction.description.includes(this.state.searchTerm) ||
+        transaction.category.includes(this.state.searchTerm)
+    );
+    this.setState({ foundTransactions: newTransactions });
+    console.log(this.state.foundTransactions);
+  };
 
   render() {
-
+    // console.log(this.state);
     return (
       <div>
-        <Search />
-        <TransactionsList />
+        <Search handleChange={this.handleChange} />
+
+        {this.state.foundTransactions.length > 0 ? (
+          <TransactionsList transactions={this.state.foundTransactions} />
+        ) : (
+          <TransactionsList
+            transactions={this.state.transactions.transactions}
+          />
+        )}
       </div>
-    )
+    );
   }
 }
 
-export default AccountContainer
+export default AccountContainer;

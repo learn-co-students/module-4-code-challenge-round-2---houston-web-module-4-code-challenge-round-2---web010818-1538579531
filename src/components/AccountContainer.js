@@ -10,7 +10,7 @@ class AccountContainer extends Component {
 
     this.state = {
       trxns: transactions,
-      selectedTransaction: ''
+      searchTransaction: ''
     }
     // get a default state working with the data imported from TransactionsData
     // use this to get the functionality working
@@ -18,9 +18,9 @@ class AccountContainer extends Component {
 
   }
 
-  // handleChange(event) {
-  //   // your code here
-  // }
+  handleChange(e) {
+    this.setState({searchTransaction: e.target.value})
+  }
 
   // componentDidMount() {
   //   fetch('../transactionsData')
@@ -30,15 +30,15 @@ class AccountContainer extends Component {
   //     })
   // }
 
-  selectTransaction = () => {
-    this.setState({trxns:this.state.trxns, selectedTransaction:this.state.selectedTransaction})
+  selectTransaction = (e) => {
+    this.setState({trxns:this.state.trxns, searchTransaction:this.state.searchTransaction})
   }
 
   render() {
    //console.log(transactions)
     return (
       <div>
-        <Search selectTransaction={this.selectTransaction}/>
+        <Search selectTransaction={this.searchTransaction} handleChange={this.handleChange}/>
         <TransactionsList trxns={this.state.trxns} />
       </div>
     )

@@ -5,23 +5,27 @@ import {transactions} from '../transactionsData'
 
 class AccountContainer extends Component {
     state = {
-      transactions: transactions
-      // search: ''
+      transactions: transactions,
+      searchTerm: ''
     }
+
+
+
     // get a default state working with the data imported from TransactionsData
 
 
-  handleChange(event) {
-    // this.setState()
-  }
+  handleChange = (newSearch) => {
+    console.log(newSearch)
+      this.setState({searchTerm: newSearch})
+    }
+
 
   render() {
     // console.log(this.state.transactions)
-    // console.log(transactions)
     return (
       <div>
-        <Search handleChange={this.handleChange}/>
-        <TransactionsList transactions={this.state.transactions}/>
+        <Search handleChange={this.handleChange} />
+        <TransactionsList transactions={this.state.transactions} searchTerm={this.state.searchTerm}/>
       </div>
     )
   }

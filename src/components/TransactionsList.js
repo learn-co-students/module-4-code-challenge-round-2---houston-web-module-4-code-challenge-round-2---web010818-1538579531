@@ -1,13 +1,18 @@
-import React, {Component} from 'react'
-import Transaction from './TransactionsList'
+import React, {Component} from 'react';
+// import Transaction from './TransactionsList'
+import Transaction from './Transaction'
 
 class TransactionsList extends Component {
+
   renderTransaction = () => {
-    console.log(this.props.transactions)
-    return this.props.transactions.map(transaction => (
-    <Transaction/>
-  ))
-  // return "hello"
+      const filteredTransactions = this.props.transactions.filter((transaction) =>{
+        console.log(transaction)
+      return transaction.category.includes(this.props.searchTerm) || transaction.description.includes(this.props.searchTerm)
+    })
+      return filteredTransactions.map((transaction) => {
+
+        return <Transaction transaction={transaction} key={transaction.id}/>
+    })
   }
 
 

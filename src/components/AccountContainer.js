@@ -6,24 +6,28 @@ import {transactions} from '../transactionsData'
 class AccountContainer extends Component {
 
   constructor() {
-    super()
-
-    // get a default state working with the data imported from TransactionsData
-    // use this to get the functionality working
-    // then replace the default transactions with a call to the API
-
+    super();
+    this.state = {
+      transactions: transactions,
+      searchTerm: ""
+    }
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    // your code here
+  handleChange(e) {
+    this.setState({
+      searchTerm: e.target.value
+    })
   }
 
   render() {
-
+    const filteredTransactions = this.state.transactions.filter(transaction => {
+      return transaction.category === this.state.searchTerm || transaction.description === this.state.searchTerm
+    })
     return (
       <div>
-        <Search />
-        <TransactionsList />
+        <Search transactions={this.state.transactions} handleChange={this.handleChange} searchTerm={this.state.searchTerm}/>
+        <TransactionsList filteredTransactions={filteredTransactions} />
       </div>
     )
   }

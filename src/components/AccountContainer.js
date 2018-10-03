@@ -7,9 +7,20 @@ class AccountContainer extends Component {
   constructor() {
     super();
     this.state = {
-      transactions: [...transactions],
+      transactions: [],
       searchTerm: ""
     };
+  }
+
+  fetchData() {
+    fetch("https://boiling-brook-94902.herokuapp.com/transactions").then(
+      response =>
+        response.json().then(data => this.setState({ transactions: data }))
+    );
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   handleSearch = input => {

@@ -18,20 +18,17 @@ class AccountContainer extends Component {
 
   }
 
-  handleChange(e) {
-    this.setState({searchTransaction: e.target.value})
+  handleChange = (e) => {
+    console.log(e.target.value)
+    this.setState({searchTransaction: e.target.value}, this.selectTransaction);
   }
 
-  // componentDidMount() {
-  //   fetch('../transactionsData')
-  //     .then(resp => resp.json())
-  //     .then(trxns => {
-  //         this.setState({ trxns:trxns })
-  //     })
-  // }
-
-  selectTransaction = (e) => {
-    this.setState({trxns:this.state.trxns, searchTransaction:this.state.searchTransaction})
+  selectTransaction = () => {
+    const allTrxns = this.state.trxns
+    const filtered = allTrxns.filter((trxn) => {
+      return trxn.description.includes(this.state.searchTransaction)
+    })
+    this.setState({trxns: filtered})
   }
 
   render() {

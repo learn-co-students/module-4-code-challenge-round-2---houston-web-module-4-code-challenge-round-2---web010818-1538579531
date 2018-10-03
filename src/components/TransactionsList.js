@@ -2,11 +2,11 @@ import React from 'react'
 import Transaction from './Transaction'
 
 const TransactionsList = (props) => {
-  console.log(props.trxns)
+  //console.log(props.trxns)
   const trxn = props.trxns.map((trxn) => {
     return <Transaction trxn={trxn} />
   })
-  console.log(trxn)
+  //console.log(trxn)
   return (
     <div>
     <table className="ui celled striped padded table">
